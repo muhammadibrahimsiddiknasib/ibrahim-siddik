@@ -1,1 +1,1 @@
-{"hosting":{"public":".","ignore":["firebase.json","scripts/**",".github/**","**/.*","**/node_modules/**","README.md"]}}
+{"hosting":{"public":"dist","ignore":["**/.*","**/node_modules/**"]}}
