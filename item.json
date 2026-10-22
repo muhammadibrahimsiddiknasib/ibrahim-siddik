@@ -1,0 +1,8 @@
+{
+  "title": {"en": "Title", "bn": "শিরোনাম", "ar": "العنوان"},
+  "text": {"en": "A short description.", "bn": "সংক্ষিপ্ত বিবরণ।", "ar": "وصف قصير."},
+  "date": "2026-10",
+  "status": "read",
+  "author": "Author name",
+  "link": ""
+}
