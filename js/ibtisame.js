@@ -23,11 +23,11 @@ function purr(l=1.6,v=.18){if(!ok())return;nb=nb||nz();const t=ac.currentTime,s=
 let sp=0;function step(){noise('bandpass',1500,.06,.05,2);if(++sp%3==0&&ok()){const t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();o.frequency.value=2600;env(g,t,.005,.4,.03);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.45)}}
 const hiss=()=>{noise('highpass',3500,.35,.14);meow(.6,.35,.12)};
 /* movement */
-let X=-130,Y=innerHeight-8,dir=1,gen=0,busy=false,leadOn=0,sc=null,taps=0,lt=0,P={x:innerWidth/2,y:innerHeight/2};
-const place=()=>{m.style.transform=`translate(${X-56}px,${Y-82}px)`;svg.style.transform=`scaleX(${dir})`};
+let arc=0,X=-130,Y=innerHeight-8,dir=1,gen=0,busy=false,leadOn=0,sc=null,taps=0,lt=0,P={x:innerWidth/2,y:innerHeight/2};
+const place=()=>{m.style.transform=`translate(${X-56}px,${Y+arc-82}px)`;svg.style.transform=`scaleX(${dir})`};
 const setS=s=>{m.dataset.s=s;pp.style.transform=s=='book'?'translate(0,2.5px)':''},wait=ms=>new Promise(r=>setTimeout(r,ms)),L=(a,b)=>a+Math.random()*(b-a);
 const sleep=(ms,my)=>new Promise(r=>{const t0=performance.now(),i=setInterval(()=>{if(gen!=my||performance.now()-t0>=ms){clearInterval(i);r(gen==my)}},80)});
-function goTo(x,y,my){setS('walk');let last=performance.now(),acc=0;return new Promise(res=>{const f=n=>{if(gen!=my)return res(false);const dt=Math.min(.05,(n-last)/1000);last=n;const dx=x-X,dy=y-Y,d=Math.hypot(dx,dy);if(d<4)return res(true);const s=Math.min((fine?170:140)*dt,d);X+=dx/d*s;Y+=dy/d*s;if(Math.abs(dx)>3)dir=dx>0?1:-1;acc+=dt;if(acc>.3){acc=0;step()}place();requestAnimationFrame(f)};requestAnimationFrame(f)})}
+function goTo(x,y,my){setS('walk');const sy=Y,tot=Math.hypot(x-X,y-Y)||1;let last=performance.now(),acc=0;return new Promise(res=>{const f=n=>{if(gen!=my){arc=0;return res(false)}const dt=Math.min(.05,(n-last)/1000);last=n;const dx=x-X,dy=y-Y,d=Math.hypot(dx,dy);if(d<4){arc=0;return res(true)}const s=Math.min((fine?170:140)*dt,d);X+=dx/d*s;Y+=dy/d*s;arc=Math.abs(y-sy)>40?-Math.sin(Math.PI*(1-d/tot))*Math.min(70,tot*.18):0;if(Math.abs(dx)>3)dir=dx>0?1:-1;acc+=dt;if(acc>.3){acc=0;step()}place();requestAnimationFrame(f)};requestAnimationFrame(f)})}
 const floor=()=>({x:L(50,innerWidth-60),y:innerHeight-8});
 const perch=()=>{const r=[...document.querySelectorAll('#nav a,main h2,.lb a')].map(e=>e.getBoundingClientRect()).filter(r=>r.width&&r.top>70&&r.bottom<innerHeight-10);if(!r.length)return floor();const q=r[r.length*Math.random()|0];return{x:q.left+q.width/2,y:q.top}};
 const al=()=>{bub.style.left=X<130?'0':X>innerWidth-130?'auto':'50%';bub.style.right=X>innerWidth-130?'0':'auto';bub.style.transform=X<130||X>innerWidth-130?'none':'translateX(-50%)'};let hold=0;
@@ -41,15 +41,15 @@ async function welcome(){busy=true;let n=0,v=1;n=await num();
  say(t.n+(v>1?t.b(v):n?t.wn(n):t.w),5200);await wait(3200);busy=false}
 async function lead(my){const s=$('#skills');if(!s||leadOn||scrollY>400)return;leadOn=1;setS('meow');meow(1.1,.7);say(T().l,6000);await sleep(1800,my);meow(1.15,.6);await sleep(5000,my);leadOn=0}
 const act=async(my,st,snd,n,ms)=>{setS(st);for(let i=0;i<n;i++){snd();if(!await sleep(ms,my))return}};
-async function life(){await welcome();for(;;){while(busy)await wait(200);const my=++gen,r=Math.random(),f=floor();
- try{if(r<.14){const q=perch();if(await goTo(q.x,q.y,my)){setS('sit');await sleep(L(3500,6000),my)}}
- else if(r<.26){const q=fine?{x:P.x,y:Math.min(P.y,innerHeight-8)}:f;if(await goTo(q.x,q.y,my)){setS('play');m.classList.add('hop');meow(1.5,.25,.1);await sleep(1300,my);m.classList.remove('hop')}}
- else if(r<.35){if(await goTo(f.x,f.y,my)){setS('nap');await sleep(L(5500,9000),my)}}
- else if(r<.42)await lead(my);
- else if(r<.62){if(await goTo(f.x,f.y,my))await act(my,'book',()=>noise('bandpass',3200,.18,.07,1),4,2300)}
- else if(r<.80){if(await goTo(f.x,f.y,my))await act(my,'tea',()=>noise('bandpass',700,.25,.07,2),3,2400)}
- else if(r<.94){if(await goTo(f.x,f.y,my))await act(my,'photo',()=>{noise('highpass',4000,.05,.14);setTimeout(()=>noise('highpass',2500,.06,.1),90)},3,2600)}
- else await goTo(f.x,f.y,my)}catch(e){}}}
+async function life(){await welcome();for(;;){while(busy)await wait(200);const my=++gen,r=Math.random(),q=perch();
+ try{if(r<.22){if(await goTo(q.x,q.y,my)){setS('sit');await sleep(L(3500,6000),my)}}
+ else if(r<.32){const w=fine?{x:P.x,y:Math.min(P.y,innerHeight-8)}:floor();if(await goTo(w.x,w.y,my)){setS('play');m.classList.add('hop');meow(1.5,.25,.1);await sleep(1300,my);m.classList.remove('hop')}}
+ else if(r<.40){if(await goTo(q.x,q.y,my)){setS('nap');await sleep(L(5500,9000),my)}}
+ else if(r<.47)await lead(my);
+ else if(r<.65){if(await goTo(q.x,q.y,my))await act(my,'book',()=>noise('bandpass',3200,.18,.07,1),4,2300)}
+ else if(r<.81){if(await goTo(q.x,q.y,my))await act(my,'tea',()=>noise('bandpass',700,.25,.07,2),3,2400)}
+ else if(r<.95){if(await goTo(q.x,q.y,my))await act(my,'photo',()=>{noise('highpass',4000,.05,.14);setTimeout(()=>noise('highpass',2500,.06,.1),90)},3,2600)}
+ else await goTo(q.x,q.y,my)}catch(e){}}}
 const TX={en:{walk:['Exploring...','Meow!'],sit:['Meow?','Hmm...'],nap:['Zzz...'],play:['Hehe!','Catch me!'],book:['Reading...','Good book!'],tea:['Tea time!','Mmm, chai'],photo:['Say cheese!','Click!'],meow:['Meow!!'],love:['Purr...'],ann:['Hmph!']},
 bn:{walk:['ঘুরছি...','মিউ!'],sit:['মিউ?','হুম...'],nap:['ঘুম...'],play:['হিহি!','ধরো তো!'],book:['পড়ছি...','দারুণ বই!'],tea:['চা-এর সময়!','আহ্, চা'],photo:['হাসুন!','ক্লিক!'],meow:['মিউ!!'],love:['গুরর...'],ann:['হুঁ!']},
 ar:{walk:['أستكشف...','مياو!'],sit:['مياو؟','همم...'],nap:['زززز...'],play:['هيهي!','أمسك بي!'],book:['أقرأ...','كتاب رائع!'],tea:['وقت الشاي!','ممم، شاي'],photo:['ابتسم!','كليك!'],meow:['مياو!!'],love:['خرخرة...'],ann:['همف!']}};
