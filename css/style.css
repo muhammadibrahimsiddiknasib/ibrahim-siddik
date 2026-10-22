@@ -41,3 +41,30 @@ h2{font-size:1.5rem;margin-bottom:1.3rem;color:var(--gd)}p{max-width:62ch}
 .scn{position:fixed;inset:0;z-index:8;display:grid;place-items:center;background:rgba(12,59,41,.35);backdrop-filter:blur(3px);padding:1rem}
 .pn{position:relative;width:min(640px,100%);max-height:82vh;overflow:auto;background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:1.6rem 1.6rem 2rem}
 .pn h2{margin:.4rem 0 1rem}.pn .x{position:absolute;inset-block-start:.7rem;inset-inline-end:.8rem;font:inherit;font-size:1.6rem;border:0;background:none;cursor:pointer;color:var(--mut)}
+.lb a{font:inherit;font-size:.85rem;border:1px solid var(--line);border-radius:99px;padding:.3rem .9rem;color:var(--ink);text-decoration:none;transition:.2s}
+.lb a.on,.lb a:hover{background:var(--g);color:#fff;border-color:var(--g)}
+#gal img[hidden]{display:none}
+.card small{display:block;color:var(--mut);font-size:.8rem;margin-bottom:.2rem}.strip{display:flex;gap:.4rem;overflow-x:auto;margin:.6rem 0}.strip img{width:72px;height:72px;object-fit:cover;border-radius:8px;margin:0;cursor:zoom-in}
+img.cert,.lbx img{-webkit-user-drag:none;user-select:none;-webkit-touch-callout:none}.lbx img{pointer-events:none}
+#ib{left:0;top:0;pointer-events:auto}#ib svg{display:block;overflow:visible}
+#ib .bub{left:auto;right:auto;bottom:100%;width:max-content;max-width:210px;white-space:normal;text-align:center;cursor:pointer}
+#ib.hop svg{animation:none}#ib.hop .cat{animation:hop .4s}
+#ib .tl{transform-box:fill-box;transform-origin:100% 100%;animation:tw 1.5s ease-in-out infinite alternate}@keyframes tw{from{transform:rotate(-14deg)}to{transform:rotate(16deg)}}
+#ib .lg{transform-box:fill-box;transform-origin:50% 0}
+#ib[data-s=walk] .l1,#ib[data-s=walk] .l4{animation:lg .34s ease-in-out infinite alternate}#ib[data-s=walk] .l2,#ib[data-s=walk] .l3{animation:lg .34s ease-in-out infinite alternate-reverse}@keyframes lg{from{transform:rotate(-24deg)}to{transform:rotate(24deg)}}
+#ib .ec,#ib .eh,#ib .br,#ib .m2,#ib .ht,#ib .zz{display:none}
+#ib .eo{transform-box:fill-box;transform-origin:50% 50%;animation:bl 4.5s infinite}@keyframes bl{94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+#ib[data-s=nap] .eo,#ib[data-s=love] .eo{display:none}#ib[data-s=nap] .ec,#ib[data-s=love] .eh,#ib[data-s=love] .ht{display:block}
+#ib[data-s=ann] .br,#ib[data-s=ann] .m2{display:block}#ib[data-s=ann] .m1{display:none}
+#ib[data-s=nap] .zz{display:block;animation:zz 2s infinite}#ib[data-s=love] .ht{animation:zz 1s infinite}@keyframes zz{50%{transform:translateY(-6px);opacity:.3}}
+#ib .hd{transition:transform .4s}#ib[data-s=nap] .hd{transform:translate(-12px,14px) rotate(6deg)}#ib[data-s=nap] .lg{display:none}
+#ib[data-s=play] .cat{animation:pl .5s ease-in-out infinite}@keyframes pl{50%{transform:translateY(-12px)}}
+.flw{position:fixed;left:0;top:0;z-index:11;pointer-events:none}
+#snd{position:fixed;left:12px;bottom:12px;z-index:11;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.85);color:var(--g);display:grid;place-items:center;cursor:pointer}#snd.off{color:var(--mut)}#snd .sl{display:none}#snd.off .sl{display:block}
+#ib .tea,#ib .bk,#ib .cm{display:none}#ib[data-s=tea] .tea,#ib[data-s=book] .bk,#ib[data-s=photo] .cm{display:block}
+#ib .fh{opacity:0}#ib[data-s=photo] .fh{animation:fh 2.6s infinite}@keyframes fh{88%{opacity:0}92%{opacity:.85}100%{opacity:0}}
+#ib[data-s=tea] .hd{animation:sip 3s ease-in-out infinite}@keyframes sip{50%{transform:translate(4px,4px) rotate(7deg)}}
+#ib[data-s=book] .hd{transform:translate(2px,5px) rotate(5deg)}#ib[data-s=photo] .hd{transform:rotate(-4deg)}
+#ib .bub{opacity:0;transition:opacity .6s;pointer-events:none;border-radius:20px;padding:.45rem .9rem}#ib .bub.on{opacity:1;pointer-events:auto}
+#ib .bub::after{content:"";position:absolute;bottom:-9px;left:calc(50% - 5px);width:10px;height:10px;background:#fff;border:1px solid var(--line);border-radius:50%}
+#ib .bub::before{content:"";position:absolute;bottom:-16px;left:calc(50% - 8px);width:6px;height:6px;background:#fff;border:1px solid var(--line);border-radius:50%}
